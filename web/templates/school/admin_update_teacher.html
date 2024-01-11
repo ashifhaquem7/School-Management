@@ -1,0 +1,126 @@
+{% extends 'school/adminbase.html' %}
+{% load widget_tweaks %}
+
+
+
+
+{% block content %}
+
+<head>
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+       background: -webkit-linear-gradient(left, #343a40, #607d8b);
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid #ced4da;
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      background: #4caf50;
+      color: #fff;
+    }
+  </style>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<!------ signup page for teacher by admin(sumit)  ---------->
+<form method="post" action='{% url 'edit-admin-teacher-save' %}'>
+  {% csrf_token %}
+  <div class="container register-form">
+    <div class="form">
+      {% comment %} Display Messages {% endcomment %}
+      {% if messages %}
+      <div class="form-group">
+        <div class="col-12">
+          {% for message in messages %}
+          {% if message.tags == "error" %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert"
+            style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == "success" %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert"
+            style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      <div class="note">
+        <p>Update Teacher Details</p>
+      </div>
+
+      <div class="form-content">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              {% comment %} {% render_field form.first_name class="form-control" placeholder="First Name" %} {% endcomment %}
+              {{form.first_name}}
+            </div>
+            <div class="form-group">
+              {% comment %} {% render_field form.username class="form-control" placeholder="Username" %} {% endcomment %}
+              {% comment %} {{form.username}} {% endcomment %}
+            </div>
+            <div class="form-group">
+              {% comment %} {% render_field form.mobile class="form-control" placeholder="Contact" %} {% endcomment %}
+              {{form.mobile}}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              {% comment %} {% render_field form.last_name class="form-control" placeholder="Last Name" %} {% endcomment %}
+              {{form.last_name}}
+            </div>
+            <div class="form-group">
+              {% comment %} {% render_field form.password class="form-control" placeholder="Password" %} {% endcomment %}
+              {{form.password}}
+            </div>
+            <div class="form-group">
+              {% comment %} {% render_field form.salary class="form-control" placeholder="Salary" %} {% endcomment %}
+              {{form.salary}}
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btnSubmit">Update</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+
+{% endblock content %}

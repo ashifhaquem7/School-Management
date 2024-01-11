@@ -1,0 +1,105 @@
+{% extends 'school/adminbase.html' %}
+
+
+
+{% block content %}
+
+<head>
+
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+  <style media="screen">
+    a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    .row {
+      margin: 100px;
+    }
+  </style>
+
+</head>
+
+
+
+<!--
+written By : sumit kumar
+-->
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h6 class="panel-title">Teachers</h6>
+
+      </div>
+      {% comment %} Display Messages {% endcomment %}
+      {% comment %} {% if messages %}
+      <div class="form-group">
+        <div class="col-12">
+          {% for message in messages %}
+          {% if message.tags == "error" %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert"
+            style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% elif message.tags == "success" %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert"
+            style="margin-top: 10px;">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %} {% endcomment %}
+
+      <table class="table table-hover table-striped table-bordered" id="dev-table">
+        <thead>
+
+          <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Salary</th>
+            <th>Joining Date</th>
+            <th>Actions</th>
+            
+          </tr>
+        </thead>
+        {% for t in teachers %}
+        <tr>
+          <td> {{t.user.first_name}}</td>
+          <td>{{t.mobile}}</td>
+          <td>{{t.salary}}</td>
+          <td>{{t.joindate}}</td>
+          <td><a class="btn btn-success btn-xs" href="{% url 'approve-teacher' t.id %}"><span class="glyphicon glyphicon-ok"></span></a>
+          <a class="btn btn-danger btn-xs" href="{% url 'remove-teacher' t.id %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        </tr>
+
+        {% endfor %}
+      </table>
+    </div>
+
+
+  </div>
+</div>
+
+<!--
+      written By : sumit kumar
+      -->
+
+{% endblock content %}
