@@ -7,6 +7,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class CustomUser(AbstractUser):
+    id = models.AutoField(primary_key=True)
     role_id = models.CharField(max_length=10, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -51,6 +52,7 @@ class Student(models.Model):
         verbose_name_plural = 'Student'
     
 class Notice (models.Model):
+    id = models.AutoField(primary_key=True)
     date = models.DateField(auto_now=True)
     byy= models.CharField(max_length=20, null=True,default='school')
     message = models.CharField(max_length=200)
@@ -64,6 +66,7 @@ class Notice (models.Model):
         verbose_name_plural = 'Notice'
 
 class Attendence(models.Model):
+    id = models.AutoField(primary_key=True)
     roll = models.CharField(max_length=10, null=True)
     date = models.DateField()
     class1 = models.CharField(max_length=10)

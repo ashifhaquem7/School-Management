@@ -161,8 +161,7 @@ def admin_dashboard(request):
     teachercount= Teacher.objects.all().filter(status='T').count()
     studentcount = Student.objects.all().filter(status='T').count()
     salary = Teacher.objects.all().filter(status='T').aggregate(Sum('salary'))
-    tp=salary['salary__sum']
-    new_salary = float(tp)
+    new_salary = float(salary['salary__sum'])
     studentfee = Student.objects.all().filter(status='T').aggregate(Sum('fee'))
     new_fee = float(studentfee['fee__sum'])
     pendingteacher = Teacher.objects.all().filter(status='F').count()
