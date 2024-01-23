@@ -2,7 +2,7 @@
 
 The School Management System is based on python based application implemented using Django-framework. 
 It aims to efficiently manage various aspects of students and teacher information within a school setting.
-The project's database operatons are handled through djnago's ORM(Object Relational Mapping).
+The project's database operations are handled through djnago's ORM(Object Relational Mapping).
 
 Key Features:
 1. <b>Admin Panel:</b> In this panel admin will view all informations on admin dashboard, like <br><br>
