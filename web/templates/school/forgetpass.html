@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>SMS - Django</title>
+
+
+  <style type="text/css">
+    body {
+      color: #aa082e;
+      background-color: #b6bde7;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    a:link {
+      text-decoration: none;
+    }
+
+    .note {
+      text-align: center;
+      height: 80px;
+       background: -webkit-linear-gradient(left, #343a40, #607d8b);
+      color: #fff;
+      font-weight: bold;
+      line-height: 80px;
+    }
+
+    .form-content {
+      padding: 5%;
+      border: 1px solid #ced4da;
+      margin-bottom: 2%;
+    }
+
+    .form-control {
+      border-radius: 1.5rem;
+    }
+
+    .btnSubmit {
+      border: none;
+      border-radius: 1.5rem;
+      padding: 1%;
+      width: 20%;
+      cursor: pointer;
+      background: #4caf50;
+      color: #fff;
+    }
+  </style>
+
+
+
+
+
+
+</head>
+
+<body>
+  {% include "school/navbar.html" %}
+  <br>
+  <br>
+  <!--- signup page for teacher by admin  ---------->
+  <form method='POST' action={% url 'forget_pass' %}>
+    {% csrf_token %}
+        {% comment %} Display Messages {% endcomment %}
+    {% if messages %}
+    <div class="form-group">
+        <div class="col-12">
+            {% for message in messages %}
+            {% if message.tags == "error" %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert"
+                style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% elif message.tags == "success" %}
+            <div class="alert alert-success alert-dismissible fade show"
+                role="alert" style="margin-top: 10px;">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    <div class="col d-flex justify-content-center">
+    <div class='form'>
+    <br><br>
+        <div class="note">
+            <p>Forgot Password</p>
+        </div>
+    <div class='form-content'>
+        <!-- Email input -->
+        <br>
+        <div data-mdb-input-init class="form-outline  p-2">
+        {{form.email}}
+        </div>
+        <br><br>
+        <!-- Submit button -->
+        <button data-mdb-ripple-init type="submit" class="btn btn-success btn-block">Submit</button>
+    </div>
+  </form>
+
+  <br><br><br>
+</div>
+</div>
+  
+  {% include "school/footer.html" %}
+</body>
+
+</html>

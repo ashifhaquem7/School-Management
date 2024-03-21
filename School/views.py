@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from .forms import AdminSignupForm,TeachersignupForm,StudentSignupForm,edit_TeacherForm,edit_StudentForm,NoticeForm,AttendenceForm,AskDateForm,ContactusForm
+from django.shortcuts import render,redirect,get_object_or_404
+from .forms import AdminSignupForm,TeachersignupForm,StudentSignupForm,edit_TeacherForm,edit_StudentForm,NoticeForm,AttendenceForm,AskDateForm,ContactusForm,ForgotPassForm,ChangePassForm
 from .models import CustomUser,Teacher,Student,Attendence,Notice
 from django.http import HttpResponse
 from django.contrib import messages
@@ -8,6 +8,10 @@ from django.contrib.auth import authenticate,login
 from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
+from django.core.mail import send_mail
+from django.conf import settings
+from .token import send_password_mail
+import uuid
 
 # Create your views here.
 def home(request):
@@ -15,6 +19,46 @@ def home(request):
 
 def aboutUs(request):
     return render(request,'school/aboutus.html')
+
+def forget_password(request):
+    form=ForgotPassForm()
+    try:
+        if request.method=='POST':
+            form=ForgotPassForm(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data['email']
+                #user = get_object_or_404(CustomUser, email=email)
+                print(email)
+
+                if not CustomUser.objects.filter(email=email).first():
+                    messages.error(request,'No user found with this email.')
+                    return redirect('forget_pass')
+                user=CustomUser.objects.get(email=email)
+                print(user)
+                token =str(uuid.uuid4())
+                send_password_mail(user, token)
+                print('email is sent')
+                messages.success(request,'An email is sent ')
+                return redirect('login/')  
+            
+    except IntegrityError as e:
+        print(e)
+        return redirect('forget_pass') 
+     
+    context={
+        'form': form,
+    }
+    return render(request,'school/forgetpass.html',context)
+
+def change_password(request,token):
+    form=ChangePassForm()
+    if request.method=='POST':
+        form=ChangePassForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data['password']
+            repassword = form.cleaned_data['repassword']
+
+    return render(request,'school/forgetpassword_1.html',{'form':form})
 
 def contactUs(request):
     form=ContactusForm()
@@ -68,7 +112,7 @@ def teacherSignup(request):
     return render(request,'school/teachersignup.html',context)
 
 def teacherwaitApproval(request):
-    teachers=Teacher.objects.get(id=request.user.id)
+    teachers=Teacher.objects.filter(id=request.user.id)
     return render(request,'school/teacher_wait_for_approval.html',{'teachers':teachers})
 
 def teachersave(request):
@@ -78,17 +122,27 @@ def teachersave(request):
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             username= form.cleaned_data['username']
+            print(username)
             password= form.cleaned_data['password']
+            email = form.cleaned_data['email']
+            print(email)
             mobile= form.cleaned_data['mobile']
             salary = form.cleaned_data['salary']
             
+            subject = 'Welcome To SMS- Student Management System'
+            message = f'Dear {first_name} {last_name},\n \n Welcome To Student Management System. \n Please wait for the approval.\n \n Regards \n \n Admin'
+            from_email = settings.EMAIL_HOST_USER
+            recipient_list =[email]
+
             try:
-                new = CustomUser.objects.create_user(first_name=first_name,last_name=last_name,username=username,password=password,is_active=0,is_staff=1,role_id=66)
+                new = CustomUser.objects.create_user(first_name=first_name,last_name=last_name,username=username,password=password,email=email,is_active=0,is_staff=1,role_id=66)
                 new.teacher.mobile = mobile
                 new.teacher.salary = salary
                 new.teacher.status = 'F'
+                send_mail(subject,message, from_email, recipient_list,fail_silently=False)
                 new.save()
                 print('successful')
+                messages.success(request,"Account created!! Please wait for Approval.")
                 return redirect('teacher-wait-for-approval')
             # except Exception as e:
             #     print(f'Error:{e}')
@@ -98,7 +152,11 @@ def teachersave(request):
                 return HttpResponse('<h2>Integrity Error</h2>')
         else:
             print(form.errors)
-            return HttpResponse('<h2>Invalid</h2>')
+            messages.error(request, form.errors)
+            context={
+                'form':form
+            }
+            return render(request,'school/teachersignup.html',context)
     else:
             return HttpResponse('<h2>Out</h2>')
     
@@ -115,7 +173,7 @@ def studentSignup(request):
     return render(request,'school/studentsignup.html', context)
 
 def studentWaitApproval(request):
-    students=Student.objects.get(id=request.user.id)
+    students=Student.objects.filter(id=request.user.id)
     return render(request,'school/student_wait_for_approval.html',{'students':students})
 
 def student_signup(request):
@@ -126,18 +184,27 @@ def student_signup(request):
             last_name = form.cleaned_data['last_name']
             username= form.cleaned_data['username']
             password= form.cleaned_data['password']
-            mobile = form.cleaned_data['mobile']
-            class1 = form.cleaned_data['class1']
+            email = form.cleaned_data['email']  
+            mobile = form.cleaned_data['mobile']           
+            class1 = form.cleaned_data['class1']            
             roll = form.cleaned_data['roll']
             fee = form.cleaned_data['fee']
+            
+            # subject = 'Welcome To SMS- Student Management System'
+            # message = f'Dear {first_name} {last_name},\n \n Welcome To Student Management System. \n Please wait for the approval.\n \n Regards \n \n Admin- Student Management System'
+            # from_email = settings.EMAIL_HOST_USER
+            # recipient_list =[email]
 
             try:
-                user = CustomUser.objects.create_user(first_name=first_name, last_name=last_name,username=username,password=password,role_id=99,is_active=0)
+                user = CustomUser.objects.create_user(first_name=first_name, last_name=last_name,email=email,username=username,password=password,role_id=99,is_active=0)
                 user.student.mobile = mobile
                 user.student.class1 = class1
                 user.student.roll = roll
                 user.student.fee = fee
                 user.student.status = 'F'
+                # send_mail(subject,message, from_email, recipient_list,fail_silently=False)
+                #print(send_mail)
+                #print(username)
                 user.save()
                 print('successful')
                 messages.success(request,'Student Added Successfully!')
@@ -145,13 +212,21 @@ def student_signup(request):
             except IntegrityError as e:
                 print(f'Error:{e}')
                 return HttpResponse('<h2>Integrity Error</h2>')
-            except Exception as e:
-                print(f'Error:{e}')
-                return HttpResponse('<h2>Exception Error</h2>')
         else:
             print(form.errors)
-            messages.error(request,'Invalid Credentials!!')
-            return HttpResponse('<h2>Invalid</h2>')
+            messages.error(request, form.errors)
+            context={
+                'form':form
+                }
+        return render(request,'school/studentsignup.html',context)
+        # else:
+        #     print(form.errors)
+        #     messages.error(request,form.errors)
+        #     #return HttpResponse(form.errors)
+        #     context = {
+        #         'form': form,
+        #         }
+        #     return render(request,'school/studentsignup.html',context)
 
 ################################## Login Authentication #####################
         
@@ -161,9 +236,9 @@ def admin_dashboard(request):
     teachercount= Teacher.objects.all().filter(status='T').count()
     studentcount = Student.objects.all().filter(status='T').count()
     salary = Teacher.objects.all().filter(status='T').aggregate(Sum('salary'))
-    new_salary = float(salary['salary__sum'])
+    #new_salary = float(salary['salary__sum'])
     studentfee = Student.objects.all().filter(status='T').aggregate(Sum('fee'))
-    new_fee = float(studentfee['fee__sum'])
+    #new_fee = float(studentfee['fee__sum'])
     pendingteacher = Teacher.objects.all().filter(status='F').count()
     pendingstudent = Student.objects.all().filter(status='F').count()
     teachersalary = Teacher.objects.filter(status='F').aggregate(Sum('salary'))
@@ -174,8 +249,8 @@ def admin_dashboard(request):
     context={
         'teachercount' : teachercount,
         'studentcount' : studentcount,
-        'new_salary' : new_salary,
-        'new_fee' : new_fee,
+        #'new_salary' : new_salary,
+        #'new_fee' : new_fee,
         'pendingteacher' : pendingteacher,
         'pendingstudent' : pendingstudent,
         'pendingteachersalary' : pendingteachersalary,
@@ -226,7 +301,7 @@ def dologin(request):
             return HttpResponse('<h2>Integrity Error</h2>')
         except:
             messages.error(request,'Invalid Credentials!!')
-            return HttpResponse('<h2>Invalid Login Credentials!</h2>')
+            return redirect('login')
     
 def logout_request(request):
     messages.success(request,'Logout')
@@ -292,7 +367,6 @@ def adminTeacher_edit(request,id):
 @login_required
 def adminTeacher_save(request):
     id = request.session.get('id')
-    print(id)
     form=edit_TeacherForm(request.POST)
     if form.is_valid():
         first_name = form.cleaned_data['first_name']

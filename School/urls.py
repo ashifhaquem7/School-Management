@@ -12,6 +12,8 @@ urlpatterns = [
     path('adminsignup/', views.adminSignup, name='adminsignup'),
     path('login/', views.login_view, name='login'),
     path('admin_signup/', views.admin_signup, name='admin_signup'),
+    path('forget_pass/', views.forget_password, name='forget_pass'),
+    path('change_pass/<token>/', views.change_password, name='change_pass'),
 
     ##### teacher section ##############
     path('teachersignup/', views.teacherSignup, name='teachersignup'),

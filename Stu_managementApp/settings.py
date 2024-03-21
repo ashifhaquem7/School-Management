@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     'School',
     'web',
     'widget_tweaks',
+    'crispy_forms',
+    'crispy_bootstrap5'
     
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -131,3 +134,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL ='dologin'
+
+# For Sending mail 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'xyz@gmail.com'
+EMAIL_HOST_PASSWORD = 'xxxx xxxx xxxx xxxx'
+EMAIL_USE_TLS = True

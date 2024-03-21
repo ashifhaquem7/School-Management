@@ -1,46 +1,47 @@
-# School Management System
+# 🏫 School Management System
 
-The School Management System is based on python based application implemented using Django-framework. 
-It aims to efficiently manage various aspects of students and teacher information within a school setting.
-The project's database operations are handled through djnago's ORM(Object Relational Mapping).
+The School Management System is a Python-based application implemented using the Django framework. It aims to efficiently manage various aspects of student and teacher information within a school setting. The project's database operations are handled through Django's ORM (Object Relational Mapping).
 
-Key Features:
-1. <b>Admin Panel:</b> In this panel admin will view all informations on admin dashboard, like <br><br>
-   &emsp;&emsp;&emsp;<b>i. Dashboard:</b> In dashboard informations are view as categories like <b>'Total students', 'Total tecahers','Teacher's Salary',<br>
-   &emsp;&emsp;&emsp; 'Student's Fee','Pending Students','Pending Teachers', 'Pending Salaries','Pending Dues'</b> etc.<br>
+## 🚀 Key Features:
 
-   &emsp;&emsp;&emsp;<b>ii. Teacher:</b> In teacher panel admin will do certain operations like, <br>
-   
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>1. view all teachers :</b> Here admin will see all the informations about teachers, and perform opertaions like<br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>'edit', 'enable', 'disable', 'delete'.</b><br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>2. Add Teacher :</b> Admin will hire teacher's directly from admin panel through <b>add teacher</b><br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>3. Approve Teacher :</b> If anyone signup through the portal will came to this portion,<br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; where admin will approve them or reject their profiles.
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>4. View Teachers Salary: </b> Here admin will get informations about teachers salary.<br>
-   
-   &emsp;&emsp;&emsp;<b>iii. Student:</b> In Student panel admin will do certain operations like, <br>
-   
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>1. view all students:</b> Here admin will see all the informations about students, and perform opertaions like<br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>'edit', 'enable', 'disable', 'delete'.</b><br>
-   
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>2. Add student :</b> Admin will add student's directly from admin panel through <b>add student</b><br>
-   
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>3. pprove student :</b> If anyone signup through the portal will came to this portion, where admin<br>
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;  will approve them or reject their profiles.<br>
-   
-   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>4.View students fee: </b> Here admin will get informations about students fee.<br>
-   
-   &emsp;&emsp;&emsp;<b>iv. View Attendance:</b> (students) Here admin will view attendances of the students.<br>
-   
-   &emsp;&emsp;&emsp;<b>v. Fee's:</b> students fee informations are provided here.<br>
-   
-   &emsp;&emsp;&emsp;<b>vi.Notice:</b> Admin will post any notification through here and it will viewed on teacher and student dashboard. <br>
-   
-3. <b>Teacher Panel:</b> Teacher Profile <br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>Dashboard :</b> Tecaher information are provided here.<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>Attendance :</b> Here teacher wiil take attendance of students and view it. <br>
+### 📊 Admin Panel:
 
-4. <b>Student Panel: </b>Student Profile <br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>Dashboard :</b>Student information are provided here.<br>
-&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; <b>Attendance :</b> Here student wiil view attendance of himself/herself. <br>
+In this panel, the admin will view all information on the admin dashboard, like:
+
+- **📈 Dashboard**: In the dashboard, information is viewed as categories like 'Total students', 'Total teachers', 'Teacher's Salary', 'Student's Fee', 'Pending Students', 'Pending Teachers', 'Pending Salaries', 'Pending Dues', etc.
+
+- **👩‍🏫 Teacher**: In the teacher panel, the admin will do certain operations like,
+
+  1. **👀 View all teachers**: Here admin will see all the information about teachers and perform operations like 'edit', 'enable', 'disable', 'delete'.
+  
+  2. **➕ Add Teacher**: Admin will hire teachers directly from the admin panel through add teacher.
+  
+  3. **👍 Approve Teacher**: If anyone signs up through the portal, they will come to this portion, where the admin will approve them or reject their profiles.
+  
+  4. **💰 View Teachers Salary**: Here admin will get information about teachers' salary.
+
+- **👩‍🎓 Student**: In the student panel, the admin will do certain operations like,
+
+  1. **👀 View all students**: Here admin will see all the information about students and perform operations like 'edit', 'enable', 'disable', 'delete'.
+  
+  2. **➕ Add student**: Admin will add students directly from the admin panel through add student.
+  
+  3. **👍 Approve student**: If anyone signs up through the portal, they will come to this portion, where the admin will approve them or reject their profiles.
+  
+  4. **💰 View students fee**: Here admin will get information about students' fees.
+
+- **📅 View Attendance**: (students) Here admin will view attendances of the students.
+
+- **💵 Fee's**: students fee information is provided here.
+
+- **📢 Notice**: Admin will post any notification through here, and it will be viewed on the teacher and student dashboard.
+
+### 📚 Teacher Panel:
+
+- **👩‍🏫 Teacher Profile Dashboard**: Teacher information is provided here.
+- **📅 Attendance**: Here the teacher will take attendance of students and view it.
+
+### 🎓 Student Panel:
+
+- **👩‍🎓 Student Profile Dashboard**: Student information is provided here.
+- **📅 Attendance**: Here the student will view attendance of himself/herself.
